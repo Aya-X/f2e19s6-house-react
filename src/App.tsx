@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import reactLogo from './assets/react.svg';
-import './App.css';
+import './styles/App.css';
 
 function App(): JSX.Element {
   const [count, setCount] = useState<number>(0);
