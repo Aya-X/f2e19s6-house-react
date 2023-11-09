@@ -1,39 +1,27 @@
-import { useState } from 'react';
-
-import reactLogo from './assets/react.svg';
-import './styles/App.css';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
+import Root from './routes/root';
+import Room from './routes/room';
 
 function App(): JSX.Element {
-  const [count, setCount] = useState<number>(0);
+  const router = createHashRouter([
+    {
+      path: '/',
+      element: <Root />,
+      // loader: rootLoader,
+      // errorElement: <div>Oops! There was an error.</div>,
+      // children: [],
+    },
+    {
+      path: 'room/:roomId',
+      element: <Room />,
+    },
+    {
+      path: '*',
+      element: <div>Oops! There was an error.</div>,
+    },
+  ]);
 
-  return (
-    <>
-      <div>
-        <a href="https://react.dev" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      <h1>Vite + React</h1>
-
-      <div className="card">
-        <button
-          type="button"
-          onClick={() => setCount((prevCount) => prevCount + 1)}
-        >
-          <span>count is </span>
-          {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
