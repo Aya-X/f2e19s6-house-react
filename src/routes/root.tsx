@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import api from '../helpers/ApiService';
+
 interface IRoom {
   id: number;
   name: string;
@@ -10,27 +12,9 @@ function Root(): JSX.Element {
   const [rooms, setRooms] = useState<IRoom[]>([]);
 
   useEffect(() => {
-    function getRooms() {
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          Authorization: import.meta.env.VITE_APP_TOKEN,
-        },
-      };
-
-      fetch(
-        'https://challenge.thef2e.com/api/thef2e2019/stage6/rooms',
-        requestOptions,
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          setRooms(result.items);
-        })
-        .catch((error) => console.log('ERROR:::', error));
-    }
-
-    getRooms();
+    api.getRooms().then((res) => {
+      setRooms(res.items);
+    });
   }, []);
 
   return (
